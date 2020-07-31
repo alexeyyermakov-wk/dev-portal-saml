@@ -37,11 +37,11 @@ spec:
           # TODO : Add ports if needed, try to use descriptive names
           # For example...
           #
-          # ports:
-          #   - name: http 
-          #     containerPort: 80
-          #   - name: https
-          #     containerPort: 443
+          ports:
+            - name: port-8080 
+              containerPort: 8080
+            - name: port-8443
+              containerPort: 8443
           securityContext:
             runAsUser: 65534
             allowPrivilegeEscalation: false

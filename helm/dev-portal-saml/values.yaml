@@ -1,0 +1,143 @@
+---
+# Default values for template.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Docker image to run.
+image:
+  registry: drydock.workiva.net
+  repo: workiva/dev-portal-saml
+  tag: 'latest-release'
+  # Uncomment to specify a full docker image for local development
+  override: kristophjunge/test-saml-idp:latest
+
+# Number of pods replicas to run. If your service can handle more than 1,
+# run at least 3 for high-availability.
+# TODO
+replicas: 1
+
+# The arn of the IAM role to be given to your container
+# Example: arn:aws:iam::<account>:role/<name>
+# TODO
+# iamRole: ''
+
+# The minimum number of available pods during updates
+minAvailable: 50%
+
+# Autoscaling configuration, configures the horizontal pod autoscaler and pod disruption budget.
+# HPA: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+# PodDisruptionBudget: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+autoscaling:
+  # minReplicas: 1
+  # maxReplicas: 9
+  metrics:
+  # - type: cpu
+  #   average_percent: 75
+  # - type: memory
+  #   average_percent: 75
+
+# Ingress configuration
+# See: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  # Base domain for the cluster (ex. wk-dev.wdesk.org, app.wdesk.org).
+  clusterDomain: ''
+  rules: []
+  # Example Rules:
+  # rules:
+  #   - subDomain: h
+  #     pathPrefix: /s/dev-portal-saml
+  #     backends: 
+  #       # Matches /s/dev-portal-saml/frugal
+  #       - path: /frugal
+  #         port: 8123
+  #       # Matches /s/dev-portal-saml/
+  #       - port: 8124
+
+# Environment variables.
+# TODO : Define extra Env variables
+environment:
+  MSG_URL: "nats://nats-nats-tls-disabled.workiva.svc.cluster.local:4222"
+  NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
+
+# Kubernetes fields to add to environment variables.
+# TODO : Define extra fields
+environmentFields:
+  MSG_HEALTH_TOPIC: metadata.name
+  # HOST_IP: status.hostIP
+  # POD_IP: status.podIP
+
+# Secret values to be supplied to containers as environment variables.
+# Secrets should not be committed to code and should be supplied at runtime.
+# TODO : Define secrets
+secrets:
+#   DB_PASSWORD: ''
+
+# Mounted files
+# See: https://kubernetes.io/docs/concepts/configuration/secret/
+# files:
+#   filename: ''
+
+# Resources allocated to your container.
+# See: https://kubernetes.io/docs/concepts/policy/resource-quotas/
+# TODO : Update limits and requests to tailor to your service
+resources:
+  limits:
+    cpu: 1.00
+    memory: 1024Mi
+  requests:
+    cpu: 1.00
+    memory: 1024Mi
+
+# The readinessProbe defines when your service is considered ready for traffic.
+# It is similar to Harbour Health checks.
+# See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+# TODO: You should use readinessProbes, please implement them.
+
+# Http example
+# readinessProbe:
+#  httpGet:
+#    path: /readiness_check
+#    port: 8080
+#  initialDelaySeconds: 5
+#  periodSeconds: 10
+#  timeoutSeconds: 10
+#  successThreshold: 1
+#  failureThreshold: 3
+
+# Exec example:
+# readinessProbe:
+#  exec:
+#    command:
+#      - /readiness-check.sh
+#  initialDelaySeconds: 5
+#  periodSeconds: 10
+#  timeoutSeconds: 10
+#  successThreshold: 1
+#  failureThreshold: 3
+
+
+# If possible you should define a livenessProbe. This check will cause your container
+# to restart if it fails a default of three times in a row.
+# See: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+# TODO: You should use livenessProbe.
+
+# Http example
+# livenessProbe:
+#  httpGet:
+#    path: /liveness_check
+#    port: 8080
+#  initialDelaySeconds: 5
+#  periodSeconds: 10
+#  timeoutSeconds: 10
+#  failureThreshold: 3
+
+# Exec example:
+# livenessProbe:
+#  exec:
+#    command:
+#      - /liveness-check.sh
+#  initialDelaySeconds: 5
+#  periodSeconds: 10
+#  timeoutSeconds: 10
+#  failureThreshold: 3
+

@@ -144,3 +144,6 @@ resources:
 #  timeoutSeconds: 10
 #  failureThreshold: 3
 
+localhostcrt: /Users/alexeyyermakov/dev-portal/dev-portal-gateway/localhost.crt
+localhostpem: /Users/alexeyyermakov/dev-portal/dev-portal-gateway/localhost.pem
+authsourcesphp: /Users/alexeyyermakov/dev-portal/dev-portal-gateway/authsources.php

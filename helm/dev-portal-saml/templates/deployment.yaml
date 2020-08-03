@@ -38,17 +38,18 @@ spec:
           # For example...
           #
           ports:
-            - name: port-8080 
+            - name: port8080 
               containerPort: 8080
-            - name: port-8443
+            - name: port8443
               containerPort: 8443
-          securityContext:
-            runAsUser: 65534
-            allowPrivilegeEscalation: false
-            # Required if the container attaches to a privileged port
-            capabilities: 
-              add: 
-              - NET_BIND_SERVICE
+          # Uncomment to no longer run the container as root
+          # securityContext:
+          #   runAsUser: 65534
+          #   allowPrivilegeEscalation: false
+          #   Required if the container attaches to a privileged port
+          #   capabilities: 
+          #     add: 
+          #     - NET_BIND_SERVICE
           env:
             {{- range $key, $value := .Values.environment }}
             - name: {{ $key }}
@@ -85,16 +86,23 @@ spec:
           resources:
 {{ toYaml .Values.resources | trimSuffix "\n" | indent 12 }}
           {{- end }}
-
-    # TODO : File mounts if needed
-            # volumeMounts:
-            # - name: <filename>
-            #   mountPath: </mount/path>
-      # volumes:
-        # - name: <filename>
-        #   secret:
-            # secretName: {{ template "template.fullname" . }}-files-<filename>
-            # items:
-              # - key: <fliename>
-              #   path: </secret/path>
-
+          volumeMounts:
+            - mountPath: /var/www/simplesamlphp/cert/server.crt
+              name: crt
+            - mountPath: /var/www/simplesamlphp/cert/server.pem
+              name: pem
+            - mountPath: /var/www/simplesamlphp/config/authsources.php
+              name: auth
+      volumes:
+        - name: crt
+          hostPath:
+            path: {{required "localhost.crt is required" .Values.localhostcrt}}
+            type: File
+        - name: pem
+          hostPath:
+            path: {{required "localhost.pem is required" .Values.localhostpem}}
+            type: File
+        - name: auth
+          hostPath:
+            path: {{required "authsources.php is required" .Values.authsourcesphp}}
+            type: File

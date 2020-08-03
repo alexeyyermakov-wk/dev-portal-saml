@@ -13,10 +13,10 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      name: port-8080
+      name: port8080
     - port: 8443
       targetPort: 8443
-      name: port-8443
+      name: port8443
   selector:
     app: {{ template "template.name" . }}
     release: {{ .Release.Name }}

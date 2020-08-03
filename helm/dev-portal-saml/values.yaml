@@ -85,11 +85,11 @@ secrets:
 # TODO : Update limits and requests to tailor to your service
 resources:
   limits:
-    cpu: 1.00
-    memory: 1024Mi
+    cpu: 0.25
+    memory: 256Mi
   requests:
-    cpu: 1.00
-    memory: 1024Mi
+    cpu: 0.25
+    memory: 256Mi
 
 # The readinessProbe defines when your service is considered ready for traffic.
 # It is similar to Harbour Health checks.

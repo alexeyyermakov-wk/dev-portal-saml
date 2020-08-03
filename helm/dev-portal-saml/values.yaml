@@ -58,9 +58,9 @@ ingress:
 environment:
   MSG_URL: "nats://nats-nats-tls-disabled.workiva.svc.cluster.local:4222"
   NEW_RELIC_DISTRIBUTED_TRACING_ENABLED: "true"
-  SIMPLESAMLPHP_SP_ENTITY_ID: http://app.example.com
-  SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: http://localhost/simplesaml/module.php/saml/sp/saml2-acs.php/test-sp
-  SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: http://localhost/simplesaml/module.php/saml/sp/saml2-logout.php/test-sp
+  SIMPLESAMLPHP_SP_ENTITY_ID: http://localhost:5000
+  SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: http://localhost:5000/sso/saml
+  SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: http://localhost:5000/auth/logout
 
 # Kubernetes fields to add to environment variables.
 # TODO : Define extra fields
@@ -101,7 +101,7 @@ resources:
 #  httpGet:
 #    path: /readiness_check
 #    port: 8080
-#  initialDelaySeconds: 5
+#  initialDelaySeconds: 10
 #  periodSeconds: 10
 #  timeoutSeconds: 10
 #  successThreshold: 1
@@ -129,7 +129,7 @@ resources:
 #  httpGet:
 #    path: /liveness_check
 #    port: 8080
-#  initialDelaySeconds: 5
+#  initialDelaySeconds: 10
 #  periodSeconds: 10
 #  timeoutSeconds: 10
 #  failureThreshold: 3
@@ -144,6 +144,7 @@ resources:
 #  timeoutSeconds: 10
 #  failureThreshold: 3
 
+# Full directory path to these files is required
 localhostcrt: /Users/alexeyyermakov/dev-portal/dev-portal-gateway/localhost.crt
 localhostpem: /Users/alexeyyermakov/dev-portal/dev-portal-gateway/localhost.pem
 authsourcesphp: /Users/alexeyyermakov/dev-portal/dev-portal-gateway/authsources.php

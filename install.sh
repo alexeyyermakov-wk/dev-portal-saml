@@ -1,2 +1,2 @@
 #!/bin/bash
-helm install dev-portal-saml ./helm/dev-portal-saml/
+helm install dev-portal-saml ~/dev-portal/saml/helm/dev-portal-saml/

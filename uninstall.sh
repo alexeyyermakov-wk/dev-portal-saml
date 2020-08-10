@@ -1,2 +1,2 @@
 #!/bin/bash
-helm uninstall dev-portal-saml
+helm uninstall saml
